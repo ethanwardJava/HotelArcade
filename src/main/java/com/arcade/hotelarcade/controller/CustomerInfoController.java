@@ -49,12 +49,14 @@ public class CustomerInfoController {
         return "success";
     }
 
+    // ======================REMOVING CUSTOMER BASED ON THE ID (DATA-BASE)===========================
     @DeleteMapping("/customers/remove/{id}")
     public String deleteCustomerById(@PathVariable Long id) {
         customersInfoServices.delete(id);
         return "success";
     }
 
+    // ======================UPDATING A CUSTOMER==========================
     @PutMapping("customers/update/{id}")
     public String updateCustomerById(@RequestBody CustomerInfoEntity customerInfoEntity, @PathVariable Long id) {
         customersInfoServices.update(customerInfoEntity, id);
