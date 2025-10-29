@@ -1,6 +1,8 @@
 package com.arcade.hotelarcade.services;
 
+import com.arcade.hotelarcade.controller.CustomerInfoController;
 import com.arcade.hotelarcade.entity.CustomerInfoEntity;
+import com.arcade.hotelarcade.error.ResourceNotFoundException;
 import com.arcade.hotelarcade.repository.CustomerInfoRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
@@ -17,9 +19,20 @@ public class CustomerInfoServicesImpl implements CustomersInfoServices {
         this.customerInfoRepository = customerInfoRepository;
     }
 
+    /**
+     * Retrieves all customer records from the database.
+     *
+     * @return a list of all {@link CustomerInfoEntity} instances, which may be empty if no customers exist
+     * @apiNote This method is typically mapped to GET /customers in {@link CustomerInfoController}
+     * @throws ResourceNotFoundException if nothing found
+     */
     @Override
     public List<CustomerInfoEntity> findAll() {
-        return customerInfoRepository.findAll();
+        List<CustomerInfoEntity> customerInfoEntities = customerInfoRepository.findAll();
+        if (customerInfoEntities.isEmpty()) {
+            throw new ResourceNotFoundException("404 Not Found");
+        } else return customerInfoEntities;
+
     }
 
     @Override
@@ -34,7 +47,7 @@ public class CustomerInfoServicesImpl implements CustomersInfoServices {
 
     @Override
     public CustomerInfoEntity findByNationalId(String nationalId) {
-        return  customerInfoRepository.findByNationalId(nationalId);
+        return customerInfoRepository.findByNationalId(nationalId);
     }
 
     @Override

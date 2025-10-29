@@ -2,6 +2,7 @@ package com.arcade.hotelarcade.controller;
 
 import com.arcade.hotelarcade.entity.CustomerInfoEntity;
 import com.arcade.hotelarcade.services.CustomersInfoServices;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -11,16 +12,15 @@ import java.util.List;
 public class CustomerInfoController {
 
     private final CustomersInfoServices customersInfoServices;
-
-
     public CustomerInfoController(CustomersInfoServices customersInfoServices) {
         this.customersInfoServices = customersInfoServices;
     }
 
     // ================== RETURNS A LIST OF ALL CUSTOMERS (BOOKED OR NOT)=====================
     @GetMapping("/customers")
-    public List<CustomerInfoEntity> findAll() {
-        return customersInfoServices.findAll();
+    public ResponseEntity<List<CustomerInfoEntity>> getAllCustomers() {
+        List<CustomerInfoEntity> customers = customersInfoServices.findAll();
+        return ResponseEntity.ok(customers); // 200 OK with [] if empty
     }
 
 
