@@ -23,42 +23,48 @@ public class CustomerInfoServicesImpl implements CustomersInfoServices {
      * Retrieves all customer records from the database.
      *
      * @return a list of all {@link CustomerInfoEntity} instances, which may be empty if no customers exist
-     * @apiNote This method is typically mapped to GET /customers in {@link CustomerInfoController}
      * @throws ResourceNotFoundException if nothing found
+     * @apiNote This method is typically mapped to GET /customers in {@link CustomerInfoController}
      */
+
     @Override
     public List<CustomerInfoEntity> findAll() {
         List<CustomerInfoEntity> customerInfoEntities = customerInfoRepository.findAll();
         if (customerInfoEntities.isEmpty()) {
-            throw new ResourceNotFoundException("404 Not Found");
+            throw new ResourceNotFoundException("Resource not found");
         } else return customerInfoEntities;
-
     }
+
 
     @Override
     public CustomerInfoEntity findById(Long id) {
         return customerInfoRepository.findById(id).orElseThrow(() -> new RuntimeException("Customer not found"));
     }
 
+
     @Override
     public List<CustomerInfoEntity> findByLastName(String lastName) {
         return customerInfoRepository.findByLastName(lastName);
     }
+
 
     @Override
     public CustomerInfoEntity findByNationalId(String nationalId) {
         return customerInfoRepository.findByNationalId(nationalId);
     }
 
+
     @Override
     public void save(CustomerInfoEntity customerInfoEntity) {
         customerInfoRepository.save(customerInfoEntity);
     }
 
+
     @Override
     public void delete(Long id) {
         customerInfoRepository.deleteById(id);
     }
+
 
     @Override
     @Transactional
